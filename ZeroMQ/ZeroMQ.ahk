@@ -222,8 +222,102 @@
             throw Exception(this.error(), -1, this.errno())
     }
     
-    setsockopt(option_name, ByRef option_value, option_len)
+    setsockopt(option_name, ByRef option_value, option_len := "")
     {
+        if (option_len = "")
+        {
+            option_value_bak := option_value
+            
+            ; int64_t
+            if (   option_name = this.MAXMSGSIZE)
+                VarSetCapacity(option_value, option_len := 8, 0)
+                , NumPut(option_value_bak, option_value, "Int64")
+            ; uint64_t
+            if (   option_name = this.AFFINITY
+                or option_name = this.VMCI_BUFFER_SIZE
+                or option_name = this.VMCI_BUFFER_MIN_SIZE
+                or option_name = this.VMCI_BUFFER_MAX_SIZE)
+                VarSetCapacity(option_value, option_len := 8, 0)
+                , NumPut(option_value_bak, option_value, "UInt64")
+            ; int
+            if (   option_name = this.BACKLOG
+                or option_name = this.CONFLATE
+                or option_name = this.CONNECT_TIMEOUT
+                or option_name = this.CURVE_SERVER
+                or option_name = this.GSSAPI_PLAINTEXT
+                or option_name = this.GSSAPI_SERVER
+                or option_name = this.GSSAPI_SERVICE_PRINCIPAL_NAMETYPE
+                or option_name = this.GSSAPI_PRINCIPAL_NAMETYPE
+                or option_name = this.HANDSHAKE_IVL
+                or option_name = this.HEARTBEAT_IVL
+                or option_name = this.HEARTBEAT_TIMEOUT
+                or option_name = this.HEARTBEAT_TTL
+                or option_name = this.IMMEDIATE
+                or option_name = this.INVERT_MATCHING
+                or option_name = this.IPV6
+                or option_name = this.LINGER
+                or option_name = this.MULTICAST_HOPS
+                or option_name = this.MULTICAST_MAXTPDU
+                or option_name = this.PLAIN_SERVER
+                or option_name = this.USE_FD
+                or option_name = this.PROBE_ROUTER
+                or option_name = this.RATE
+                or option_name = this.RCVBUF
+                or option_name = this.RCVHWM
+                or option_name = this.RCVTIMEO
+                or option_name = this.RECONNECT_IVL
+                or option_name = this.RECONNECT_IVL_MAX
+                or option_name = this.RECOVERY_IVL
+                or option_name = this.REQ_CORRELATE
+                or option_name = this.REQ_RELAXED
+                or option_name = this.ROUTER_HANDOVER
+                or option_name = this.ROUTER_MANDATORY
+                or option_name = this.ROUTER_RAW
+                or option_name = this.SNDBUF
+                or option_name = this.SNDHWM
+                or option_name = this.SNDTIMEO
+                or option_name = this.STREAM_NOTIFY
+                or option_name = this.TCP_KEEPALIVE
+                or option_name = this.TCP_KEEPALIVE_CNT
+                or option_name = this.TCP_KEEPALIVE_IDLE
+                or option_name = this.TCP_KEEPALIVE_INTVL
+                or option_name = this.TCP_MAXRT
+                or option_name = this.TOS
+                or option_name = this.XPUB_VERBOSE
+                or option_name = this.XPUB_VERBOSER
+                or option_name = this.XPUB_MANUAL
+                or option_name = this.XPUB_NODROP
+                or option_name = this.ZAP_ENFORCE_DOMAIN
+                or option_name = this.IPV4ONLY
+                or option_name = this.VMCI_CONNECT_TIMEOUT
+                or option_name = this.MULTICAST_LOOP
+                or option_name = this.ROUTER_NOTIFY)
+                VarSetCapacity(option_value, option_len := 4, 0)
+                , NumPut(option_value_bak, option_value, "Int")
+            /*
+            ; character string
+            if (   option_name = this.BINDTODEVICE
+                or option_name = this.GSSAPI_PRINCIPAL
+                or option_name = this.GSSAPI_SERVICE_PRINCIPAL
+                or option_name = this.METADATA
+                or option_name = this.PLAIN_PASSWORD
+                or option_name = this.PLAIN_USERNAME
+                or option_name = this.SOCKS_PROXY
+                or option_name = this.ZAP_DOMAIN)
+                option_len := VarSetCapacity(option_value, -1)
+            ; binary data
+            if (   option_name = this.CONNECT_ROUTING_ID
+                or option_name = this.CURVE_PUBLICKEY
+                or option_name = this.CURVE_SECRETKEY
+                or option_name = this.CURVE_SERVERKEY
+                or option_name = this.ROUTING_ID
+                or option_name = this.SUBSCRIBE
+                or option_name = this.UNSUBSCRIBE
+                or option_name = this.XPUB_WELCOME_MSG)
+                option_len := VarSetCapacity(option_value)
+            */
+        }
+        
         if (DllCall(this.zmq_setsockopt
                     , "Ptr", this.ptr_socket
                     , "Int", option_name
@@ -651,7 +745,7 @@
         switch flags
         {
             case "libzmq" : return major "." minor "." patch
-            case "ahkzmq" : return 20220903
+            case "ahkzmq" : return 20220907
             case "major"  : return major
             case "minor"  : return minor
             case "patch"  : return patch
