@@ -1,6 +1,8 @@
 ﻿; Hello World client in Autohotkey
 ; Connects REQ socket to tcp://localhost:5555
 ; Sends "Hello" to server, expects "World" back
+; 
+; Author: https://github.com/telppa/ahkzmq
 
 #NoEnv
 SetBatchLines -1

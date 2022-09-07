@@ -2,6 +2,7 @@
 ; Adds pub-sub flow to send kill signal to workers
 ; 
 ; Author: https://github.com/telppa/ahkzmq
+
 ; 此例应与 “4. Parallel task ventilator.ahk” 联合使用
 
 #NoEnv

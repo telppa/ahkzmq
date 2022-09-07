@@ -1,6 +1,8 @@
 ﻿; Weather update server
 ; Binds PUB socket to tcp://*:5556
 ; Publishes random weather updates
+; 
+; Author: https://github.com/telppa/ahkzmq
 
 #NoEnv
 SetBatchLines -1

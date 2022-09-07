@@ -1,4 +1,7 @@
 ﻿; Synchronized publisher
+; 
+; Author: https://github.com/telppa/ahkzmq
+
 ; 此例应启动5个 "13. Synchronized subscriber.ahk"
 
 #NoEnv

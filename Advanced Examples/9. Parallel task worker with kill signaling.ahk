@@ -2,6 +2,7 @@
 ; Adds pub-sub flow to receive and respond to kill signal
 ; 
 ; Author: https://github.com/telppa/ahkzmq
+
 ; 此例应与 “4. Parallel task ventilator.ahk” 联合使用
 
 #NoEnv

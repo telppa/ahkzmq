@@ -1,6 +1,8 @@
 ﻿; Weather update client
 ; Connects SUB socket to tcp://localhost:5556
 ; Collects weather updates in zipcode
+; 
+; Author: https://github.com/telppa/ahkzmq
 
 #NoEnv
 SetBatchLines -1

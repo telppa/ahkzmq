@@ -1,4 +1,6 @@
 ﻿; Synchronized subscriber
+; 
+; Author: https://github.com/telppa/ahkzmq
 
 #NoEnv
 SetBatchLines -1

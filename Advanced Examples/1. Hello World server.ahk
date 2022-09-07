@@ -1,6 +1,8 @@
 ﻿; Hello World server in Autohotkey
 ; Binds REP socket to tcp://*:5555
 ; Expects "Hello" from client, replies with "World"
+; 
+; Author: https://github.com/telppa/ahkzmq
 
 #NoEnv
 SetBatchLines -1
