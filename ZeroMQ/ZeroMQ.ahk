@@ -39,12 +39,12 @@
                , "zmq_ctx_get"
                , "zmq_ctx_new"                ; *
                , "zmq_ctx_set"
-               , "zmq_ctx_shutdown"
+               , "zmq_ctx_shutdown"           ; *
                , "zmq_ctx_term"               ; *
                , "zmq_curve_keypair"
                , "zmq_curve_public"
                ; , "zmq_curve"
-               , "zmq_disconnect"
+               , "zmq_disconnect"             ; *
                , "zmq_errno"                  ; *
                , "zmq_getsockopt"
                ; , "zmq_gssapi"
@@ -89,7 +89,7 @@
                ; , "zmq_timers"
                ; , "zmq_tipc"
                ; , "zmq_udp"
-               , "zmq_unbind"
+               , "zmq_unbind"                 ; *
                , "zmq_version"                ; *
                ; , "zmq_vmci"
                , "zmq_z85_decode"
@@ -189,6 +189,12 @@
             throw Exception(this.error(), -1, this.errno())
     }
     
+    shutdown(context)
+    {
+        if (DllCall(this.zmq_ctx_shutdown, "Ptr", context, "Int") = -1)
+            throw Exception(this.error(), -1, this.errno())
+    }
+    
     socket(type)
     {
         ret := DllCall(this.zmq_socket, "Ptr", this.ptr_context, "Int", type, "Ptr")
@@ -210,9 +216,21 @@
             throw Exception(this.error(), -1, this.errno())
     }
     
+    unbind(endpoint)
+    {
+        if (DllCall(this.zmq_unbind, "Ptr", this.ptr_socket, "AStr", endpoint, "Int") = -1)
+            throw Exception(this.error(), -1, this.errno())
+    }
+    
     connect(endpoint)
     {
         if (DllCall(this.zmq_connect, "Ptr", this.ptr_socket, "AStr", endpoint, "Int") = -1)
+            throw Exception(this.error(), -1, this.errno())
+    }
+    
+    disconnect(endpoint)
+    {
+        if (DllCall(this.zmq_disconnect, "Ptr", this.ptr_socket, "AStr", endpoint, "Int") = -1)
             throw Exception(this.error(), -1, this.errno())
     }
     
